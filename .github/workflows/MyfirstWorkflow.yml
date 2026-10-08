@@ -12,4 +12,18 @@ jobs:
         
       - name: checking os release for Github Hosted Runner
         run: cat /etc/os-release
+      - name: calling sleep
+        run: sleep 20
+  job2:
+    name: JOB2
+    runs-on: ubuntu-latest
+    steps:
+      - name: checking hostname for runner
+        run: hostname
+
+      - name: running multiple commands
+        run:
+            echo "Hi, This is Linto"
+            echo "Current time is 'date'"
+            sleep 20
   

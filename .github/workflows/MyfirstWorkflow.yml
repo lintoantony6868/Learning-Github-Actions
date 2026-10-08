@@ -22,7 +22,7 @@ jobs:
         run: hostname
 
       - name: running multiple commands
-        run:
+        run: |
             echo "Hi, This is Linto"
             echo "Current time is 'date'"
             sleep 20

@@ -19,13 +19,35 @@ jobs:
           echo "Hello Linto!" > myartifact.txt
           echo "This file was created by GitHub Actions." >> myartifact.txt
           echo "Current date: $(date)" >> myartifact.txt
-          ls -ltr
-          hostname
+          mkdir artifacts
+          echo "ls -ltr" >> artifacts/list.txt
+          echo "hostname" >> artifacts/hostename.txt
       - name: single file artifact
         uses: actions/upload-artifact@v7.0.2
         with:
           name: single_file
           path: ./myartifact.txt
+      - name: upload from directory
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: directory_artifacts
+          path: artifacts/
+       - name: upload from multiple path
+         uses: actions/upload-artifact@v7.0.2
+         with:
+            name: multiple_pathe
+            path: |
+              ./myartifact.txt
+              artifacts/
+       - name: upload from multiple path with exclusion
+         uses: actions/upload-artifact@v7.0.2
+         with:
+            name: multiple_path_with_exclusion
+            path: |
+              ./myartifact.txt
+              artifacts/
+              !**/hostname.txt
+          
           
         
         

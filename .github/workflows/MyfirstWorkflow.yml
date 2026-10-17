@@ -67,11 +67,11 @@ jobs:
     steps:
       - name: Referring context or inbuilt variables
         run: |
-          echo "[INFO] Triggered by ${{ github.event_name }} and ${{ github.action_path }}
-          echo "[INFO] Changes Added By ${{ github.actor }}
-          echo "[INFO] Runs on ${{ runner.name }} ${{ runner.os }}
-          echo "[INFO] Current JOB ID is ${{ job.check_run_id }}
-          echo "[INFO] Current github.head_ref ${{ github.head_ref }}
+          echo "[INFO] Triggered by ${{ github.event_name }} and ${{ github.action_path }}"
+          echo "[INFO] Changes Added By ${{ github.actor }}"
+          echo "[INFO] Runs on ${{ runner.name }} ${{ runner.os }}"
+          echo "[INFO] Current JOB ID is ${{ job.check_run_id }}"
+          echo "[INFO] Current github.head_ref ${{ github.head_ref }}"
       
   staging:
     name: Stage Deployment

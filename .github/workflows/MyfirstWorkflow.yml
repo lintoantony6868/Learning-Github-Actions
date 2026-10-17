@@ -82,7 +82,8 @@ jobs:
         run: echo "[INFO] Password ${{ vars.USER }} is ${{ secrets.PASSWORD }}"
     environment: 
       name: Staging
-  ptaging:
+    if: github.head_ref == 'dev'
+  production:
     name: Production Deployment
     runs-on: ubuntu-latest
     steps:
@@ -92,6 +93,7 @@ jobs:
         run: echo "[INFO] Password ${{ vars.USER }} is ${{ secrets.PASSWORD }}"
     environment: 
       name: Production
+    if: github.head_ref == 'main'
       
     
       

@@ -22,5 +22,21 @@ jobs:
       - name: Install Dependencies
         run: pip install -r requirements.txt
 
-      - name: Run Tests
-        run: pytest -v
+      - name: Create Reports Directory
+        run: mkdir -p reports
+
+      - name: Run Tests and Generate Reports
+        run: |
+          pytest \
+            --cov=app \
+            --cov-report=term-missing \
+            --cov-report=xml:reports/coverage.xml \
+            --cov-report=html:reports/coverage-html \
+            --junitxml=reports/junit.xml
+
+      - name: Upload Reports
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: python-test-reports
+          path: reports/
+          if-no-files-found: error

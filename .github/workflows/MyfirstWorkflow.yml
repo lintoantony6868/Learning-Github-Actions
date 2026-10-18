@@ -1,7 +1,14 @@
 name: my-first-workflow
 
 # Trigger on every push to this repository
-on: push
+on: 
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    branches:
+      - main
 env:
   ENV_TYPE: DEV
   APP_USER: LINTO
@@ -67,12 +74,38 @@ jobs:
     steps:
       - name: Referring context or inbuilt variables
         run: |
-          echo "[INFO] Triggered by ${{ github.event_name }} and ${{ github.action_path }}
-          echo "[INFO] Changes Added By ${{ github.actor }}
-          echo "[INFO] Runs on ${{ runner.name }} ${{ runner.os }}
-          echo "[INFO] Current JOB ID is ${{ job.check_run_id }}
+          echo "[INFO] Triggered by ${{ github.event_name }} and ${{ github.action_path }}"
+          echo "[INFO] Changes Added By ${{ github.actor }}"
+          echo "[INFO] Runs on ${{ runner.name }} ${{ runner.os }}"
+          echo "[INFO] Current JOB ID is ${{ job.check_run_id }}"
+          echo "[INFO] Current github.head_ref ${{ github.ref }}"
       
-
+  staging:
+    name: Stage Deployment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Referring Environment Variables
+        run: echo "[INFO] Running deployment on ${{ vars.HOST }} using ${{ vars.USER }}"
+      - name: Referring Environment Secrets
+        run: echo "[INFO] Password ${{ vars.USER }} is ${{ secrets.PASSWORD }}"
+    environment: 
+      name: Staging
+    if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
+  production:
+    name: Production Deployment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Referring Environment Variables
+        run: echo "[INFO] Running deployment on ${{ vars.HOST }} using ${{ vars.USER }}"
+      - name: Referring Environment Secrets
+        run: echo "[INFO] Password ${{ vars.USER }} is ${{ secrets.PASSWORD }}"
+    environment: 
+      name: Production
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      
+    
+      
+    
           
 
   

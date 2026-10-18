@@ -90,7 +90,7 @@ jobs:
         run: echo "[INFO] Password ${{ vars.USER }} is ${{ secrets.PASSWORD }}"
     environment: 
       name: Staging
-    if: github.head_ref == 'dev'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
   production:
     name: Production Deployment
     runs-on: ubuntu-latest
@@ -101,7 +101,7 @@ jobs:
         run: echo "[INFO] Password ${{ vars.USER }} is ${{ secrets.PASSWORD }}"
     environment: 
       name: Production
-    if: github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       
     
       

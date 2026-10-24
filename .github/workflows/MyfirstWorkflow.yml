@@ -61,6 +61,9 @@ jobs:
           ls -lah reports/
           test -f reports/coverage.xml
           head -n 10 reports/coverage.xml
+      - name: Inspect Coverage XML
+        run: |
+          grep -nE '<class |<source>|filename=' reports/coverage.xml
 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v6

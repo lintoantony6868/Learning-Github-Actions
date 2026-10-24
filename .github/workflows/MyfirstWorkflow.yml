@@ -56,6 +56,11 @@ jobs:
         with:
           name: python-test-reports
           path: reports/
+      - name: Verify Coverage Report
+        run: |
+          ls -lah reports/
+          test -f reports/coverage.xml
+          head -n 10 reports/coverage.xml
 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v6

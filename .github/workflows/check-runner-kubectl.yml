@@ -21,3 +21,7 @@ jobs:
         run: |
           kubectl version --client
           command -v kubectl
+      - name: Check Kubernetes connection
+        run: |
+          echo "Checking Kubernetes API connectivity..."
+          kubectl cluster-info

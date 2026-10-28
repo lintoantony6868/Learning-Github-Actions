@@ -8,11 +8,16 @@ jobs:
     runs-on: arc-runner-set
 
     steps:
-      - name: Check kubectl installation
+      - name: Install kubectl
         run: |
-          if command -v kubectl >/dev/null 2>&1; then
-            kubectl version --client
-          else
-            echo "kubectl is not installed in the ARC runner."
-            exit 1
-          fi
+          KUBECTL_VERSION="$(curl -L -s https://dl.k8s.io/release/stable.txt)"
+          curl -LO "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl"
+          chmod +x kubectl
+          mkdir -p "$HOME/.local/bin"
+          mv kubectl "$HOME/.local/bin/kubectl"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Verify kubectl installation
+        run: |
+          kubectl version --client
+          command -v kubectl

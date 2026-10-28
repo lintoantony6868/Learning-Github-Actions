@@ -25,3 +25,14 @@ jobs:
         run: |
           echo "Checking Kubernetes API connectivity..."
           kubectl cluster-info
+      - name: Check Kubernetes API access
+        run: |
+          echo "Checking access to the Nginx Deployment..."
+          kubectl get deployment nginx-demo -n default
+
+      - name: Check Kubernetes permissions
+        run: |
+          echo "Checking deployment permissions..."
+          kubectl auth can-i create deployments -n default
+          kubectl auth can-i patch deployments -n default
+          kubectl auth can-i create services -n default

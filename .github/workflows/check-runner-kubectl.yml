@@ -34,6 +34,20 @@ jobs:
           kubectl auth can-i patch deployments -n default
           kubectl auth can-i create services -n default
 
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Check repository files
+        run: |
+          echo "Current directory:"
+          pwd
+
+          echo "Files in current directory:"
+          ls -la
+
+          echo "Kubernetes manifests:"
+          ls -la k8s/
+
       - name: Deploy to Kubernetes
         run: |
           ls -la k8s/

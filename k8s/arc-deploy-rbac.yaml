@@ -3,24 +3,34 @@ kind: Role
 metadata:
   name: nginx-deployer
   namespace: default
+
 rules:
+  # Manage Deployments
   - apiGroups: ["apps"]
     resources: ["deployments"]
     verbs: ["get", "list", "watch", "create", "update", "patch"]
 
+  # Manage Services
   - apiGroups: [""]
     resources: ["services"]
     verbs: ["get", "list", "watch", "create", "update", "patch"]
+
+  # Read Pods for deployment verification
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "watch"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: nginx-deployer-binding
   namespace: default
+
 subjects:
   - kind: ServiceAccount
     name: arc-runner-set-gha-rs-no-permission
     namespace: arc-runners
+
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
